@@ -13,6 +13,7 @@ public class WordCountImpl {
 
     public static String getWordCount(String word) {
 
+        word = Util.simpleNormalize(word);
         String wordCount = DataScanner.searchWord(word);
         Integer count = wordMap.get(word);
         if(count == null){
