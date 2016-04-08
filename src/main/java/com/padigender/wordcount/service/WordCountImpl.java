@@ -1,7 +1,7 @@
 package com.padigender.wordcount.service;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class WordCountImpl {
 
-    private static Map<String,Integer> wordMap = new HashMap<String, Integer>();
+    private static Map<String,Integer> wordMap = new ConcurrentHashMap<String, Integer>();
 
     public static String getWordCount(String word) {
 

@@ -17,9 +17,12 @@ import org.glassfish.jersey.servlet.ServletContainer;
 
 import javax.ws.rs.core.Context;
 
+import static org.apache.commons.io.FileUtils.getFile;
+
 
 public class FileLoader extends ResourceConfig {
-    @Context ServletContext servletContext;
+
+    public static String indexPath = null;
     public InputStream[] loadFiles() {
 
         File folder;
@@ -38,9 +41,15 @@ public class FileLoader extends ResourceConfig {
     }
     public String getIndexPath() {
 
-        URL url2 = getClassLoader().getResource("txtfiles");
-        URL url = getClassLoader().getResource("index");
-        return url.getFile();
+        if(indexPath == null) {
+            synchronized (FileLoader.class) {
+                if(indexPath == null) {
+                    URL url = getClassLoader().getResource("index");
+                    indexPath = url.getFile();
+                }
+            }
+        }
+        return indexPath;
     }
 
 }

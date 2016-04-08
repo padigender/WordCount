@@ -15,18 +15,18 @@ public class DataScanner {
 		// Use Indexes from existing folder
 		FileLoader index = new FileLoader();
 		String dirPath = index.getIndexPath();
-		IndexReader reader;
+		IndexReader reader = SingletonIndexReader.getIndexReader();
 		long termFreq = 0;
-		try {
-			reader = DirectoryReader.open(FSDirectory.open(get(dirPath)));
+		if(reader != null) {
+			try {
+				word = word.toLowerCase();
+				word = word.trim();
+				Term termInstance = new Term("word", word);
+				termFreq = reader.totalTermFreq(termInstance);
 
-			word = word.toLowerCase();
-			word = word.trim();
-			Term termInstance = new Term("word", word);
-			termFreq = reader.totalTermFreq(termInstance);
-
-		} catch (IOException e) {
-			e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return String.valueOf(termFreq);
 	}
